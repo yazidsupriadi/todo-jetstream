@@ -15,6 +15,24 @@ class TodoController extends Controller
     public function index()
     {
         //
+        $todos = Todo::all();
+        return view('todo.index',compact('todos'));
+    }
+
+    
+    public function add()
+    {
+        //
+        return view('todo.create');
+    }
+    
+    public function store(Request $request)
+    {
+        //
+        $todo = new Todo;
+        $todo->todo = $request->todo;
+        $todo->save();
+        return redirect('/todo');
     }
 
     /**
@@ -33,11 +51,7 @@ class TodoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
-
+   
     /**
      * Display the specified resource.
      *
@@ -78,8 +92,11 @@ class TodoController extends Controller
      * @param  \App\Models\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Todo $todo)
+    public function delete($id)
     {
         //
+        $todo = Todo::find($id);
+        $todo->delete();
+        return redirect('/todo');
     }
 }
